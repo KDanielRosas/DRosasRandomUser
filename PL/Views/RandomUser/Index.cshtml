@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/RandomUser/Scripts.js"></script>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2>RandomUser</h2>
+        </div>
+        <div class="col" style="text-align:end">
+            <a class="btn btn-success" onclick="GetRandomUser()">Generar Usuario</a>
+        </div>
+    </div>
+    <hr />
+
+    <div class="table-responsive">
+        <table id="tblUsers" class="table align-middle table-bordered table-light" border="1">
+            <thead>
+                <tr>
+                    <th class="text-center" style="font-weight:bold">Nombre</th>
+                    <th class="text-center" style="font-weight:bold">Email</th>
+                    <th class="text-center" style="font-weight:bold">Dirección</th>
+                    <th class="text-center" style="font-weight:bold">Sexo</th>
+                    <th class="text-center" style="font-weight:bold">Foto</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>        
+    </div>
+
+    <div class="row">
+        <div class="col" style="text-align:end">
+            <a class="btn btn-danger" onclick="LimpiarTabla()">Limpiar tabla</a>
+        </div>
+    </div>
+</div>
+
