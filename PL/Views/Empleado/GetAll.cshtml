@@ -1,0 +1,157 @@
+﻿@model ML.Result
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript" src="/js/Empleado/Scripts.js"></script>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2>Empleados</h2>
+        </div>
+        <div class="col" style="text-align:end">
+            <a class="btn btn-success" onclick="MostrarModal()">Agregar Empleado</a>
+        </div>
+    </div>
+    <hr />
+
+    <div class="row">
+        @if (Model != null)
+        {
+            <table class="table table-bordered table-responsive" id="tbEmpleados">
+                <thead>
+                    <tr>
+                        <td class="text-center" style="font-weight:bold;">Editar</td>
+                        <td class="visually-hidden">IdEmpleado</td>
+                        <td class="text-center" style="font-weight:bold;">Nombre</td>
+                        <td class="text-center" style="font-weight:bold;">Apellido Paterno</td>
+                        <td class="text-center" style="font-weight:bold;">Apellido Materno</td>
+                        <td class="text-center" style="font-weight:bold;">Status</td>
+                        <td class="text-center" style="font-weight:bold;">Eliminar</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ML.Empleado empleado in Model.Objects)
+                    {
+                        <tr style="font-size:medium">
+                            <td class="text-center"><a class="btn btn-warning"
+                           onclick="GetById(@empleado.IdEmpleado)"><i class="fa-regular fa-pen-to-square"></i></a>
+                            </td>
+                            <td class="visually-hidden">@empleado.IdEmpleado</td>
+                            <td>@empleado.Nombre</td>
+                            <td>@empleado.ApellidoPaterno</td>
+                            <td>@empleado.ApellidoMaterno</td>
+                            <td>
+
+                                @if (empleado.Status == true)
+                                {
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="status" checked="checked" , onchange="ChangeStatus(@empleado.IdEmpleado, event)" />
+                                    </div>
+                                }
+                                else
+                                {
+                                        <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="status" , onchange="ChangeStatus(@empleado.IdEmpleado, event.target)" />
+                                    </div>
+                                }
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-danger"
+                                   onclick="Delete(@empleado.IdEmpleado)"><i class="fa-solid fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">Ocurrio un error!!</div>
+        }
+    </div>
+    
+</div> <!-- container -->
+
+<!-- Modal Form -->
+
+<div class="modal fade" id="ModalForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Actualizar Empleado</h4>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    
+                    <div class="form-group">
+                        <label>IdEmpleado</label>
+                        <input type="text" class="form-control" id="txtIdEmpleado" placeholder="IdEmpleado" disabled="disabled" />
+                    </div>
+                    <br />
+
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" class="form-control" id="txtNombre" placeholder="Nombre" />
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label>Apellido Paterno</label>
+                        <input type="text" class="form-control" id="txtApPaterno" placeholder="Apellido Paterno" />
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label>Apellido Materno</label>
+                        <input type="text" class="form-control" id="txtApMaterno" placeholder="Apellido Materno" />
+                    </div>
+                    <br />
+
+                    <div class="visually-hidden">
+                        <label>Status</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="status" disabled />
+                        </div>
+                    </div>
+                    
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnEnviar" onclick="Enviar()">Enviar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Message -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Detalle</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h5>
+                                Acción completada con éxito
+                            </h5>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" onclick="Reload()" class="btn btn-primary" value="Regresar" data-bs-dismiss="modal">Regresar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
